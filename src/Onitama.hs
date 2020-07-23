@@ -47,7 +47,7 @@ view = viewBoard
 
 
 update :: Float -> Game -> Game
-update delta game = game
+update _ game = game
 
 
 handleInput :: Event -> Game -> Game
