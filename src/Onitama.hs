@@ -9,41 +9,64 @@ import Graphics.Gloss.Interface.IO.Interact
 
 
 data Piece = Sensei | Student
+data Team = Red | Blue
 
 data Space
   = Empty
-  | Red Piece
-  | Blue Piece
+  | Ocupied (Team, Piece)
 
 
-data Game = Game { board :: [[Space]] }
+newtype Game = Game { spaces :: [[Space]] }
+
+
+blueStudent :: Space
+blueStudent = Ocupied (Blue, Student)
+
+redStudent :: Space
+redStudent = Ocupied (Red, Student)
+
+blueSensei :: Space
+blueSensei = Ocupied (Blue, Sensei)
+
+redSensei :: Space
+redSensei = Ocupied (Red, Sensei)
+
+
+teamToColor :: Team -> Color
+teamToColor Red = red
+teamToColor Blue = blue
+
+
+viewPiece :: Piece -> Picture
+viewPiece Sensei = circleSolid 20
+viewPiece Student = thickCircle 2 20
 
 
 viewSpace :: Space -> Picture
 viewSpace Empty = rectangleWire 50 50
-viewSpace (Red Sensei) = pictures [viewSpace Empty, color red (circleSolid 20)]
-viewSpace (Red Student) = pictures [viewSpace Empty, color red (thickCircle 2 20)]
-viewSpace (Blue Sensei) = pictures [viewSpace Empty, color blue (circleSolid 20)]
-viewSpace (Blue Student) = pictures [viewSpace Empty, color blue (thickCircle 2 20)]
+viewSpace (Ocupied (team, piece)) = pictures [viewSpace Empty, color (teamToColor team) (viewPiece piece)]
 
 
-viewBoard :: Game -> Picture
-viewBoard game = pictures
-    [ translate (-200) 200 $ viewSpace Empty
-    , translate (-150) 200 $ viewSpace (Red Student)
-    , translate (-100) 200 $ viewSpace (Red Sensei)
-    , translate (-50)  200 $ viewSpace Empty
-    , translate 0      200 $ viewSpace (Blue Sensei)
-    , translate 50     200 $ viewSpace (Blue Student)
-    ]
+viewRow :: Float -> [Space] -> Picture
+viewRow yOffset = pictures . zipWith drawSpace [-200, -150 ..]
+  where drawSpace xOffset = translate xOffset yOffset . viewSpace
+
+
+viewBoard :: [[Space]] -> Picture
+viewBoard = pictures . zipWith viewRow [-200, -150 ..]
 
 
 defaultGame :: Game
-defaultGame = Game (replicate 5 (replicate 5 Empty))
+defaultGame = Game [ [redStudent, redStudent, redSensei, redStudent, redStudent]
+                   , [Empty,      Empty,      Empty,     Empty,      Empty]
+                   , [Empty,      Empty,      Empty,     Empty,      Empty]
+                   , [Empty,      Empty,      Empty,     Empty,      Empty]
+                   , [blueStudent, blueStudent, blueSensei, blueStudent, blueStudent]
+                   ]
 
 
 view :: Game -> Picture
-view = viewBoard
+view = viewBoard . spaces
 
 
 update :: Float -> Game -> Game
@@ -51,7 +74,7 @@ update _ game = game
 
 
 handleInput :: Event -> Game -> Game
-handleInput event game = game
+handleInput _ game = game
 
 
 runGame :: Game -> IO ()
