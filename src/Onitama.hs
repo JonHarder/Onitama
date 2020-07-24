@@ -12,17 +12,20 @@ import Logic
 
 
 defaultGame :: Game
-defaultGame = Game [ [redStudent, redStudent, redSensei, redStudent, redStudent]
-                   , [Empty,      Empty,      Empty,     Empty,      Empty]
-                   , [Empty,      Empty,      Empty,     Empty,      Empty]
-                   , [Empty,      Empty,      Empty,     Empty,      Empty]
-                   , [blueStudent, blueStudent, blueSensei, blueStudent, blueStudent]
-                   ]
+defaultGame = Game { spaces =
+                     [ [redStudent, redStudent, redSensei, redStudent, redStudent]
+                     , [Empty,      Empty,      Empty,     Empty,      Empty]
+                     , [Empty,      Empty,      Empty,     Empty,      Empty]
+                     , [Empty,      Empty,      Empty,     Empty,      Empty]
+                     , [blueStudent, blueStudent, blueSensei, blueStudent, blueStudent]
+                     ]
+                   , selected = Nothing
+                   }
 
 
 runGame :: Game -> IO ()
 runGame initState =
-  let window = InWindow "Onitama" (520, 520) (10, 10)
+  let window = InWindow "Onitama" (screenWidth, screenHeight) (10, 10)
       fps = 60
       background = white
   in play window background fps initState view handleInput update

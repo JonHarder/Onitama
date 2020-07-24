@@ -1,14 +1,21 @@
 module Data where
 
 data Piece = Sensei | Student
+  deriving Show
 data Team = Red | Blue
+  deriving Show
 
 data Space
   = Empty
   | Ocupied (Team, Piece)
 
 
-newtype Game = Game { spaces :: [[Space]] }
+instance Show Space where
+  show Empty = "empty"
+  show (Ocupied x) = show x
+
+
+data Game = Game { spaces :: [[Space]], selected :: Maybe Space }
 
 
 blueStudent :: Space
@@ -22,3 +29,9 @@ blueSensei = Ocupied (Blue, Sensei)
 
 redSensei :: Space
 redSensei = Ocupied (Red, Sensei)
+
+screenWidth :: Num a => a
+screenWidth = 520
+
+screenHeight :: Num a => a
+screenHeight = 520

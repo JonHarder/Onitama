@@ -29,4 +29,8 @@ viewBoard = pictures . zipWith viewRow [-100, -50 ..]
 
 
 view :: Game -> Picture
-view = viewBoard . spaces
+view game =
+  pictures
+    [ viewBoard $ spaces game
+    , scale 0.25 0.25 $ translate (-300) (-200) $ text $ show $ selected game
+    ]
