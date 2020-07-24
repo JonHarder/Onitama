@@ -9,10 +9,10 @@ update = flip const
 
 
 convertX :: Float -> Int
-convertX x = round $ ((screenWidth / 2 + x) / 50) - 3
+convertX x = round $ ((screenWidth / 2 + (x - 10)) / 50) - 3
 
 convertY :: Float -> Int
-convertY y = round $ ((screenHeight / 2 - y) / 50) - 3
+convertY y = round $ ((screenHeight / 2 - (y + 12)) / 50) - 3
 
 
 convertCoords :: (Float, Float) -> (Int, Int)
