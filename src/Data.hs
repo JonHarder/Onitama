@@ -15,8 +15,9 @@ instance Show Space where
   show (Ocupied x) = show x
 
 
-data Game = Game { spaces :: [[Space]], selected :: Maybe Space }
+type Selection = Maybe (Space, (Int, Int))
 
+data Game = Game { turn :: Team, spaces :: [[Space]], selected :: Selection }
 
 blueStudent :: Space
 blueStudent = Ocupied (Blue, Student)

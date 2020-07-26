@@ -25,8 +25,14 @@ safeIndex i ls = if i+1 > length ls || i < 0
   else Just $ ls !! i
 
 
-selectSpace :: (Int, Int) -> [[Space]] -> Maybe Space
-selectSpace (x, y) board = safeIndex y board >>= safeIndex x
+-- takes an x, y tuple representing the tile the user has selected
+-- and the 2d grid of spaces which may be empty or may contain a piece.
+-- The coordinates given should have been converted from the floating
+-- pixel representation of where the user clicked, and so may be negative,
+-- or out of bounds of the grid of spaces. Thus, this will return Nothing
+-- when a space outside the bounds of the board has been clicked.
+selectSpace :: (Int, Int) -> [[Space]] -> Selection
+selectSpace coord@(x, y) board = safeIndex y board >>= safeIndex x >>= \space -> return (space, coord)
 
 
 handleInput :: Event -> Game -> Game

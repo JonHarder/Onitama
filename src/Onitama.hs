@@ -20,6 +20,7 @@ defaultGame = Game { spaces =
                      , [blueStudent, blueStudent, blueSensei, blueStudent, blueStudent]
                      ]
                    , selected = Nothing
+                   , turn = Blue
                    }
 
 
