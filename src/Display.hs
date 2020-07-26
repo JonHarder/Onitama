@@ -52,5 +52,5 @@ view game =
     [ viewSelection $ selected game
     , viewBoard $ spaces game
     , viewObj (-500, 550) s
-    , viewObj (-500, -620) $ show $ turn game
+    , viewObj (-500, -620) $ "Turn: " ++ show (turn game)
     ]
