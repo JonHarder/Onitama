@@ -1,8 +1,10 @@
-module Logic (update, handleInput) where
+module Logic (update, handleInput, tryMove) where
 
+import Control.Monad
 import Graphics.Gloss.Interface.IO.Interact
 
 import Data
+import Data.Card
 
 update :: Float -> Game -> Game
 update = flip const
@@ -33,6 +35,21 @@ safeIndex i ls = if i+1 > length ls || i < 0
 -- when a space outside the bounds of the board has been clicked.
 selectSpace :: (Int, Int) -> [[Space]] -> Selection
 selectSpace coord@(x, y) board = safeIndex y board >>= safeIndex x >>= \space -> return (space, coord)
+
+
+setSpace :: (Int, Int) -> a -> [[a]] -> Maybe [[a]]
+setSpace (x, y) val grid = do
+  row <- safeIndex y grid
+  let row' = take x row ++ [val] ++ drop (x + 1) row
+  return $ take y grid ++ [row'] ++ drop (y + 1) grid
+
+
+tryMove :: Board -> OccupiedSpace -> Option -> Maybe Board
+tryMove board (space, (x, y)) (Move (modX, modY)) = do
+  guard $ space /= Empty
+  let destCoords = (x + modX, y + modY)
+  (_, (destX, destY)) <- selectSpace destCoords board
+  setSpace (x, y) Empty board >>= setSpace (destX, destY) space
 
 
 handleInput :: Event -> Game -> Game

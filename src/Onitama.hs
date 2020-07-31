@@ -13,10 +13,10 @@ import Logic
 
 defaultGame :: Game
 defaultGame = Game { spaces =
-                     [ [redStudent, redStudent, redSensei, redStudent, redStudent]
-                     , [Empty,      Empty,      Empty,     Empty,      Empty]
-                     , [Empty,      Empty,      Empty,     Empty,      Empty]
-                     , [Empty,      Empty,      Empty,     Empty,      Empty]
+                     [ [redStudent,  redStudent,  redSensei,  redStudent,  redStudent]
+                     , [Empty,       Empty,       Empty,      Empty,       Empty]
+                     , [Empty,       Empty,       Empty,      Empty,       Empty]
+                     , [Empty,       Empty,       Empty,      Empty,       Empty]
                      , [blueStudent, blueStudent, blueSensei, blueStudent, blueStudent]
                      ]
                    , selected = Nothing

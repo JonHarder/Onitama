@@ -1,21 +1,25 @@
 module Data where
 
 data Piece = Sensei | Student
-  deriving Show
+  deriving (Show, Eq)
 data Team = Red | Blue
-  deriving Show
+  deriving (Show, Eq)
 
 data Space
   = Empty
   | Ocupied (Team, Piece)
+  deriving Eq
 
 
 instance Show Space where
   show Empty = "empty"
   show (Ocupied x) = show x
 
+type OccupiedSpace = (Space, (Int, Int))
 
-type Selection = Maybe (Space, (Int, Int))
+type Selection = Maybe OccupiedSpace
+
+type Board = [[Space]]
 
 data Game = Game { turn :: Team, spaces :: [[Space]], selected :: Selection }
 
