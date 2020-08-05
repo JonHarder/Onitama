@@ -1,4 +1,4 @@
-module Logic (update, handleInput, tryMove) where
+module Logic (update, handleInput, safeIndex, tryMove) where
 
 import Control.Monad
 import Graphics.Gloss.Interface.IO.Interact
