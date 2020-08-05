@@ -34,7 +34,9 @@ safeIndex i ls = if i+1 > length ls || i < 0
 -- or out of bounds of the grid of spaces. Thus, this will return Nothing
 -- when a space outside the bounds of the board has been clicked.
 selectSpace :: (Int, Int) -> [[Space]] -> Selection
-selectSpace coord@(x, y) board = safeIndex y board >>= safeIndex x >>= \space -> return (space, coord)
+selectSpace coord@(x, y) board =
+  let mOcupied = safeIndex y board >>= safeIndex x
+  in maybe (Selection Nothing) (\space -> Selection $ Just $ OcupiedSpace space coord) mOcupied
 
 
 setSpace :: (Int, Int) -> a -> [[a]] -> Maybe [[a]]
@@ -44,11 +46,14 @@ setSpace (x, y) val grid = do
   return $ take y grid ++ [row'] ++ drop (y + 1) grid
 
 
-tryMove :: Board -> OccupiedSpace -> Option -> Maybe Board
-tryMove board (space, (x, y)) (Move (modX, modY)) = do
+tryMove :: Board -> OcupiedSpace -> Option -> Maybe Board
+tryMove board os (Move (modX, modY)) = do
+  let space = ocupiedSpace os
+      (x, y) = ocupiedCoord os
+      destCoords = (x + modX, y + modY)
   guard $ space /= Empty
-  let destCoords = (x + modX, y + modY)
-  (_, (destX, destY)) <- selectSpace destCoords board
+  let selectedSpace = selectSpace destCoords board
+  (OcupiedSpace _ (destX, destY)) <- selection selectedSpace
   setSpace (x, y) Empty board >>= setSpace (destX, destY) space
 
 

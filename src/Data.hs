@@ -15,9 +15,9 @@ instance Show Space where
   show Empty = "empty"
   show (Ocupied x) = show x
 
-type OccupiedSpace = (Space, (Int, Int))
+data OcupiedSpace = OcupiedSpace { ocupiedSpace :: Space, ocupiedCoord :: (Int, Int) }
 
-type Selection = Maybe OccupiedSpace
+newtype Selection = Selection { selection :: Maybe OcupiedSpace }
 
 type Board = [[Space]]
 
