@@ -44,7 +44,7 @@ instance Drawable Selection where
     where f (OcupiedSpace _ (x, y)) =
             let coordX = coordXToPixel x
                 coordY = coordYToPixel y
-                c = greyN 0.25
+                c = greyN 0.60
             in color c $ translate coordX coordY $ rectangleSolid 50 50
 
 
@@ -99,4 +99,4 @@ instance Drawable Game where
 
 
 view :: Game -> Picture
-view _ = draw dragon
+view = draw
