@@ -1,4 +1,7 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Data.Card where
+
+import Data.Text
 
 import Data
 
@@ -23,12 +26,13 @@ newtype Option = Move (Int, Int)
 -- +------------------
 --           y
 
-data Card = Card { team :: Team, options :: [Option] }
+data Card = Card { cardName :: Text, cardTeam :: Team, cardOptions :: [Option] }
 
 rooster :: Card
 rooster =
-  Card { team = Red
-       , options =
+  Card { cardTeam = Red
+       , cardName = "Rooster"
+       , cardOptions =
          [ Move (-1,  0)
          , Move (-1, -1)
          , Move ( 1,  0)
@@ -38,11 +42,24 @@ rooster =
 
 goose :: Card
 goose =
-  Card { team = Blue
-       , options =
+  Card { cardTeam = Blue
+       , cardName = "Goose"
+       , cardOptions =
          [ Move (-1, 0)
          , Move (-1, 1)
          , Move (1, 0)
          , Move (1, -1)
+         ]
+       }
+
+dragon :: Card
+dragon =
+  Card { cardTeam = Red
+       , cardName = "Dragon"
+       , cardOptions =
+         [ Move (-1, 1)
+         , Move (-2, -1)
+         , Move (2, -1)
+         , Move (1, 1)
          ]
        }

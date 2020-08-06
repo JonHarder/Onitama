@@ -24,6 +24,7 @@ dependencies:
 - gloss
 - hspec
 - QuickCheck
+- text
 
 library:
   source-dirs: src

@@ -8,12 +8,14 @@ data Team = Red | Blue
 data Space
   = Empty
   | Ocupied (Team, Piece)
+  | Option
   deriving Eq
 
 
 instance Show Space where
   show Empty = "empty"
   show (Ocupied x) = show x
+  show Option = "option"
 
 data OcupiedSpace = OcupiedSpace { ocupiedSpace :: Space, ocupiedCoord :: (Int, Int) }
 

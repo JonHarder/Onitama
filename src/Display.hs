@@ -1,7 +1,10 @@
 module Display (view) where
 
-import Data
+import Data.Maybe (fromMaybe)
+import Data.Text (unpack)
 
+import Board
+import Data
 import Data.Card
 
 import Graphics.Gloss
@@ -25,6 +28,7 @@ teamToColor Blue = blue
 instance Drawable Space where
   draw Empty = rectangleWire 50 50
   draw (Ocupied (spaceTeam, piece)) = pictures [draw Empty, color (teamToColor spaceTeam) (draw piece)]
+  draw Option = pictures [draw Empty, color (greyN 0.75) $ rectangleSolid 49 49]
 
 
 coordXToPixel :: Int -> Float
@@ -33,6 +37,7 @@ coordXToPixel x = fromIntegral (x-2) * 50
 
 coordYToPixel :: Int -> Float
 coordYToPixel y = -1 * fromIntegral (y-2) * 50
+
 
 instance Drawable Selection where
   draw (Selection s) = maybe Blank f s
@@ -43,8 +48,29 @@ instance Drawable Selection where
             in color c $ translate coordX coordY $ rectangleSolid 50 50
 
 
+applyMove :: (Int, Int) -> Option -> (Int, Int)
+applyMove (x, y) (Move (x', y')) = (x+x', y+y')
+
+
 instance Drawable Card where
-  draw _ = rectangleSolid 100 50
+  draw card =
+    let start = (2, 2)
+        options = map (applyMove start) (cardOptions card)
+        board = [ [Empty, Empty, Empty, Empty, Empty]
+                , [Empty, Empty, Empty, Empty, Empty]
+                , [Empty, Empty, Empty, Empty, Empty]
+                , [Empty, Empty, Empty, Empty, Empty]
+                , [Empty, Empty, Empty, Empty, Empty]
+                ]
+        setOption move b = fromMaybe board $ setSpace move Option b
+        board' = foldr setOption board options
+      in pictures
+      [ viewBoard board'
+      , draw $ Selection $ Just $ OcupiedSpace Empty start
+      , translate 0 25 $ rectangleWire 300 350
+      , viewObj (-500, 600) $ unpack $ cardName card
+      , translate 99 160 $ color (teamToColor (cardTeam card)) $ rectangleSolid 50 50
+      ]
 
 
 viewRow :: Float -> [Space] -> Picture
@@ -73,4 +99,4 @@ instance Drawable Game where
 
 
 view :: Game -> Picture
-view = draw
+view _ = draw dragon

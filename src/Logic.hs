@@ -1,8 +1,9 @@
-module Logic (update, handleInput, safeIndex, tryMove) where
+module Logic (update, handleInput, tryMove) where
 
 import Control.Monad
 import Graphics.Gloss.Interface.IO.Interact
 
+import Board
 import Data
 import Data.Card
 
@@ -21,12 +22,6 @@ convertCoords :: (Float, Float) -> (Int, Int)
 convertCoords (xF, yF) = (convertX xF, convertY yF)
 
 
-safeIndex :: Int -> [a] -> Maybe a
-safeIndex i ls = if i+1 > length ls || i < 0
-  then Nothing
-  else Just $ ls !! i
-
-
 -- takes an x, y tuple representing the tile the user has selected
 -- and the 2d grid of spaces which may be empty or may contain a piece.
 -- The coordinates given should have been converted from the floating
@@ -37,13 +32,6 @@ selectSpace :: (Int, Int) -> [[Space]] -> Selection
 selectSpace coord@(x, y) board =
   let mOcupied = safeIndex y board >>= safeIndex x
   in maybe (Selection Nothing) (\space -> Selection $ Just $ OcupiedSpace space coord) mOcupied
-
-
-setSpace :: (Int, Int) -> a -> [[a]] -> Maybe [[a]]
-setSpace (x, y) val grid = do
-  row <- safeIndex y grid
-  let row' = take x row ++ [val] ++ drop (x + 1) row
-  return $ take y grid ++ [row'] ++ drop (y + 1) grid
 
 
 tryMove :: Board -> OcupiedSpace -> Option -> Maybe Board

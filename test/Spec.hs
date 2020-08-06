@@ -1,7 +1,7 @@
 import Test.Hspec
 import Test.QuickCheck
 
-import Logic
+import Board
 
 main :: IO ()
 main = hspec $
