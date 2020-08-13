@@ -23,7 +23,11 @@ newtype Selection = Selection { selection :: Maybe OcupiedSpace }
 
 type Board = [[Space]]
 
-data Game = Game { turn :: Team, spaces :: [[Space]], selected :: Selection }
+data Game = Game
+  { turn :: Team
+  , spaces :: [[Space]]
+  , selected :: Selection
+  }
 
 blueStudent :: Space
 blueStudent = Ocupied (Blue, Student)

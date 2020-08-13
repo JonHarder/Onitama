@@ -34,9 +34,9 @@ rooster =
        , cardName = "Rooster"
        , cardOptions =
          [ Move (-1,  0)
-         , Move (-1, -1)
+         , Move (-1,  1)
          , Move ( 1,  0)
-         , Move ( 1,  1)
+         , Move ( 1, -1)
          ]
        }
 
@@ -46,9 +46,9 @@ goose =
        , cardName = "Goose"
        , cardOptions =
          [ Move (-1, 0)
-         , Move (-1, 1)
+         , Move (-1, -1)
          , Move (1, 0)
-         , Move (1, -1)
+         , Move (1, 1)
          ]
        }
 
@@ -60,6 +60,158 @@ dragon =
          [ Move (-1, 1)
          , Move (-2, -1)
          , Move (2, -1)
+         , Move (1, 1)
+         ]
+       }
+
+
+tiger :: Card
+tiger =
+  Card { cardTeam = Blue
+       , cardName = "Tiger"
+       , cardOptions =
+         [ Move (0, 1)
+         , Move (0, -2)
+         ]
+       }
+
+
+crab :: Card
+crab =
+  Card { cardTeam = Blue
+       , cardName = "Crab"
+       , cardOptions =
+         [ Move (-2, 0)
+         , Move (2, 0)
+         , Move (0, -1)
+         ]
+       }
+
+monkey :: Card
+monkey =
+  Card { cardTeam = Blue
+       , cardName = "Monkey"
+       , cardOptions =
+         [ Move (-1, -1)
+         , Move (-1, 1)
+         , Move (1, -1)
+         , Move (1, 1)
+         ]
+       }
+
+
+crane :: Card
+crane =
+  Card { cardTeam = Blue
+       , cardName = "Crane"
+       , cardOptions =
+         [ Move (-1, 1)
+         , Move (1, 1)
+         , Move (0, -1)
+         ]
+       }
+
+elephant :: Card
+elephant =
+  Card { cardTeam = Red
+       , cardName = "Elephant"
+       , cardOptions =
+         [ Move (-1, 0)
+         , Move (-1, -1)
+         , Move (1, 0)
+         , Move (1, -1)
+         ]
+       }
+
+
+mantis :: Card
+mantis =
+  Card { cardTeam = Red
+       , cardName = "Mantis"
+       , cardOptions =
+         [ Move (-1, -1)
+         , Move (1, -1)
+         , Move (0, 1)
+         ]
+       }
+
+
+boar :: Card
+boar =
+  Card { cardTeam = Red
+       , cardName = "Boar"
+       , cardOptions =
+         [ Move (-1, 0)
+         , Move (0, -1)
+         , Move (1, 0)
+         ]
+       }
+
+frog :: Card
+frog =
+  Card { cardTeam = Red
+       , cardName = "Frog"
+       , cardOptions =
+         [ Move (-2, 0)
+         , Move (-1, -1)
+         , Move (1, 1)
+         ]
+       }
+
+horse :: Card
+horse =
+  Card { cardTeam = Red
+       , cardName = "Horse"
+       , cardOptions =
+         [ Move (-1, 0)
+         , Move (0, 1)
+         , Move (0, -1)
+         ]
+       }
+
+
+eel :: Card
+eel =
+  Card { cardTeam = Blue
+       , cardName = "Eel"
+       , cardOptions =
+         [ Move (-1, -1)
+         , Move (-1, 1)
+         , Move (1, 0)
+         ]}
+
+
+rabbit :: Card
+rabbit =
+  Card { cardTeam = Blue
+       , cardName = "Rabbit"
+       , cardOptions =
+         [ Move (-1, 1)
+         , Move (1, -1)
+         , Move (2, 0)
+         ]
+       }
+
+
+ox :: Card
+ox =
+  Card { cardTeam = Blue
+       , cardName = "Ox"
+       , cardOptions =
+         [ Move (0, -1)
+         , Move (1, 0)
+         , Move (0, 1)
+         ]
+       }
+
+
+cobra :: Card
+cobra =
+  Card { cardTeam = Red
+       , cardName = "Cobra"
+       , cardOptions =
+         [ Move (-1, 0)
+         , Move (1, -1)
          , Move (1, 1)
          ]
        }

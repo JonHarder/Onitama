@@ -44,8 +44,8 @@ instance Drawable Selection where
     where f (OcupiedSpace _ (x, y)) =
             let coordX = coordXToPixel x
                 coordY = coordYToPixel y
-                c = greyN 0.60
-            in color c $ translate coordX coordY $ rectangleSolid 50 50
+                c = greyN 0.25
+            in color c $ translate coordX coordY $ rectangleSolid 49 49
 
 
 applyMove :: (Int, Int) -> Option -> (Int, Int)
@@ -56,13 +56,8 @@ instance Drawable Card where
   draw card =
     let start = (2, 2)
         options = map (applyMove start) (cardOptions card)
-        board = [ [Empty, Empty, Empty, Empty, Empty]
-                , [Empty, Empty, Empty, Empty, Empty]
-                , [Empty, Empty, Empty, Empty, Empty]
-                , [Empty, Empty, Empty, Empty, Empty]
-                , [Empty, Empty, Empty, Empty, Empty]
-                ]
-        setOption move b = fromMaybe board $ setSpace move Option b
+        board = replicate 5 $ replicate 5 Empty
+        setOption move = fromMaybe board . setSpace move Option
         board' = foldr setOption board options
       in pictures
       [ viewBoard board'
@@ -74,7 +69,7 @@ instance Drawable Card where
 
 
 viewRow :: Float -> [Space] -> Picture
-viewRow yOffset = pictures . zipWith drawSpace [100, 50 ..]
+viewRow yOffset = pictures . zipWith drawSpace [100, 50 ..] . reverse
   where drawSpace xOffset = translate xOffset yOffset . draw
 
 viewBoard :: [[Space]] -> Picture
